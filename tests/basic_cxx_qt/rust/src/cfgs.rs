@@ -11,9 +11,9 @@
 //! unnoticed. Building it here catches that.
 //!
 //! Exactly one of the two QObjects below is compiled in any configuration, so
-//! both the enabled and the disabled code path are always built: a plain build
-//! has `CfgDisabled` compiled out, a `--all-features` build has `CfgEnabled`
-//! compiled in and `CfgDisabled` compiled out.
+//! both the enabled and the disabled code path are always built. With
+//! `--all-features`, as CI builds it, `CfgEnabled` is compiled in and
+//! `CfgDisabled` is compiled out; a plain build is the other way round.
 //!
 //! Note that the feature must not contain a `-`, as `CARGO_FEATURE_` variables
 //! spell it `_` and cxx-qt-build then never sees the feature as enabled, which
