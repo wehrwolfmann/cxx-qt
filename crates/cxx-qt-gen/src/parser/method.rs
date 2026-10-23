@@ -65,8 +65,6 @@ pub struct ParsedMethod {
     pub cfgs: Vec<Attribute>,
     /// Docs for the method, for passing onto the auto_wrap generated methods
     pub docs: Vec<Attribute>,
-    /// Whether the block containing the method is safe or unsafe
-    pub unsafe_block: bool,
 }
 
 impl ParsedMethod {
@@ -87,7 +85,7 @@ impl ParsedMethod {
     pub fn mock_qinvokable(method: &ForeignItemFn) -> Self {
         Self {
             is_qinvokable: true,
-            ..Self::parse(method.clone(), CaseConversion::none(), false).unwrap()
+            ..Self::parse(method.clone(), CaseConversion::none()).unwrap()
         }
     }
 
@@ -118,11 +116,7 @@ impl ParsedMethod {
         Self { specifiers, ..self }
     }
 
-    pub fn parse(
-        method: ForeignItemFn,
-        auto_case: CaseConversion,
-        unsafe_block: bool,
-    ) -> Result<Self> {
+    pub fn parse(method: ForeignItemFn, auto_case: CaseConversion) -> Result<Self> {
         let fields = MethodFields::parse(method, auto_case)?;
         let attrs = require_attributes(&fields.method.attrs, &Self::ALLOWED_ATTRS)?;
         let cfgs = extract_cfgs(&fields.method.attrs);
@@ -142,7 +136,6 @@ impl ParsedMethod {
             wrap,
             cfgs,
             docs,
-            unsafe_block,
         })
     }
 }

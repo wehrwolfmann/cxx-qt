@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/KDAB/cxx-qt/compare/v0.10.0...HEAD)
 
+### Changed
+
+- `unsafe extern "RustQt"` no longer makes the invokables inside it `unsafe` on the CXX side, as with an `extern "Rust"` block in CXX. Invokables taking a raw pointer now need to be declared as an `unsafe fn` themselves
+
 ### Fixed
 
 - `cfg` attributes on a `#[qobject]` are now applied to its casting implementation and its properties, so that a disabled QObject no longer fails to build
